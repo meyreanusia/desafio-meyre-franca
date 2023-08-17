@@ -20,7 +20,7 @@ export default class CaixaDaLanchonete {
     if (validacao2 == false) {
       return "Item extra não pode ser pedido sem o principal";
     }
-     if (itens.length == 0) {
+    if (itens.length == 0) {
       return "Não há itens no carrinho de compra!";
     }
    

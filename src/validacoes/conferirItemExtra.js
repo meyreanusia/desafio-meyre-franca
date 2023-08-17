@@ -1,42 +1,30 @@
-import { listaPedido } from "../realizarPedido.js";
-import cardapio from "../cardapio.js";
-
-export default function conferirItemExtra(pedido) {
-
-  const itensExtras = ["chantily", "queijo"];
-  const partesPedido = pedido.split(/[, ]+/);
-
-  const itemPedido = partesPedido[0];
 
 
-  if (itensExtras.includes(itemPedido)) {
-    const extra = cardapio[itemPedido];
+function conferirItemExtra(listaPedido) {
+  const itensPrincipais = ["cafe", "sanduiche"];
+  const itensExtras = [];
 
+  for (const pedido of listaPedido) {
 
-    if (itemPedido === "chantily") {
-      const principalCafe = listaPedido.some((pedido) => pedido.split(", ")[0] === "cafe");
-      
-      if (extra && extra.principal && principalCafe) {
-        listaPedido.push(pedido);
-        return true;
-      } else {
-        return false;
-      }
-    } else if (itemPedido === "queijo") {
-      const principalSanduiche = listaPedido.some(
-        (pedido) => pedido.split(", ")[0] === "sanduiche"
-      );
-      if (extra && extra.principal && principalSanduiche) {
-        listaPedido.push(pedido);
-        return true;
-      } else {
-        return false;
-      }
+    const partesDoPedido = pedido.split(",");
+    const nomeItem = partesDoPedido[0].trim();
+
+    if (nomeItem === ("chantily") || nomeItem === ("queijo")) {
+     itensExtras.push(pedido);
     }
-  } 
-  
-  else {
-    listaPedido.push(pedido);
-    return true;
   }
+
+  for (const extra of itensExtras) {
+    if (
+      (extra === "chantily" && listaPedido.includes("cafe")) ||
+      (extra === "queijo" && listaPedido.includes("sanduiche"))
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
+
+
+export default conferirItemExtra;

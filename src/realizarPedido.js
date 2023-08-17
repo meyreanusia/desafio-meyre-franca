@@ -3,17 +3,16 @@ import CaixaDaLanchonete from "./caixa-da-lanchonete.js";
 import conferirItemExtra from "./validacoes/conferirItemExtra.js";
 import verificacaoDeEntrada from "./validacoes/verificacaoDeEntrada.js";
 
-let pedido;
-let listaPedido = ['cafe,1'];
 
-realizarPedido();
+
+let listaPedido = ["pizza , 1"];
 
 function realizarPedido() {
-  pedido =  'queijo,1'
-
+  
   // validaçoes das entradas
-  const validacao1 = verificacaoDeEntrada(pedido, listaPedido);
-  const validacao2 = conferirItemExtra(pedido);
+  const validacao1 = verificacaoDeEntrada(listaPedido);
+  const validacao2 = conferirItemExtra(listaPedido);
+
 
   // caixa
   const pagamento = formaDePagamento();
@@ -23,4 +22,7 @@ function realizarPedido() {
   console.log(resultado);
 }
 
-export { realizarPedido, pedido, listaPedido };
+
+realizarPedido();
+
+export { realizarPedido, listaPedido };

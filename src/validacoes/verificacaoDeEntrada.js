@@ -1,32 +1,34 @@
-import cardapio from "../cardapio.js";
-import split from "./split.js";
+import cardapio from '../cardapio.js'
 
+function verificacaoDeEntrada(listaPedido) {
+  if (listaPedido.length === 0) {
+    return 3; // Código 3 representa "Não há itens no carrinho de compra!"
+  }
 
-export default function verificacaoDeEntrada(pedido) {
-  if (pedido.trim() !== "") {
-    
-    const partesDoPedido = split(pedido)
-    let quantidadePedido = parseInt(partesDoPedido[1]);
+  let quantidadeItens = 0;
+  let itemInvalido = false;
 
-    if(!(partesDoPedido.length > 1)){
-      return 2
+  for (const pedido of listaPedido) {
+    const partesDoPedido = pedido.split(",");
+    const nomeItem = partesDoPedido[0].trim();
+    const quantidade = parseInt(partesDoPedido[1]);
+
+    if (quantidade === undefined || isNaN(quantidade) || quantidade <= 0) {
+      return 1; // Código 1 representa "Quantidade inválida!"
     }
-    if(!(partesDoPedido[0] in cardapio)){
-        return 2
-    }
-    if ( quantidadePedido === 0 || quantidadePedido === "" || partesDoPedido.length === 1 || isNaN(quantidadePedido) ) {
-      return 1;
-    }
-    
-    else if (!(partesDoPedido[0] in cardapio) || partesDoPedido[0] == "" || partesDoPedido[0] >= 0) {
-      return 2 
-    } 
-    else{
-      return false
+
+    if (!(nomeItem in cardapio)) {
+      itemInvalido = true;
+    } else {
+      quantidadeItens += quantidade;
     }
   }
-  else{
-    return 3;
+
+  if (itemInvalido) {
+    return 2; // Código 2 representa "Item inválido!"
   }
- 
+
+
 }
+
+export default verificacaoDeEntrada;
